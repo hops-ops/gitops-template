@@ -7,11 +7,8 @@ This repository is managed by [ArgoCD](https://argo-cd.readthedocs.io/) and depl
 ArgoCD watches this repo and automatically syncs changes to your cluster. The structure follows an **app-of-apps** pattern:
 
 ```
-apps/                                  ← Drop Application manifests here
-resources/
-  crossplane/
-    configurations/                    ← Crossplane Configuration packages
-    provider-configs/                  ← Crossplane ProviderConfig resources
+apps/                                  <- Drop Application manifests here
+crossplane/                            <- Crossplane Configuration packages and resources
 ```
 
 ## Adding an Application
@@ -74,25 +71,12 @@ spec:
     - CreateNamespace=true
 ```
 
-## Using the CLI
-
-If you have the [hops CLI](https://github.com/hops-ops/hops-cli) installed:
-
-```bash
-# Add an app from a git repo
-hops gitops add app my-app --repo https://github.com/my-org/my-app.git --path k8s/
-
-# Add a Helm chart
-hops gitops add app ingress-nginx --helm --repo https://kubernetes.github.io/ingress-nginx --chart ingress-nginx --version 4.12.1
-```
-
 ## What ArgoCD Syncs
 
 | ArgoCD Application | Watches | Purpose |
 |--------------------|---------|---------|
-| `projects` | `apps/` | Your applications (app-of-apps root) |
-| `crossplane-configurations` | `resources/crossplane/configurations/` | Crossplane packages |
-| `crossplane-provider-configs` | `resources/crossplane/provider-configs/` | Provider auth configs |
+| `apps` | `apps/` | Your applications (app-of-apps root) |
+| `crossplane` | `crossplane/` | Crossplane Configuration packages and resources (optional) |
 
 ## Environments
 
